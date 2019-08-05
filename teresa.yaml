@@ -1,0 +1,15 @@
+healthCheck:
+  liveness:
+    path: /actuator/health
+    timeoutSeconds: 10
+    initialDelaySeconds: 120
+    periodSeconds: 5
+    failureThreshold: 10
+    successThreshold: 1
+  readiness:
+    path: /actuator/health
+    timeoutSeconds: 5
+    initialDelaySeconds: 120
+    periodSeconds: 3
+    failureThreshold: 6
+    successThreshold: 1

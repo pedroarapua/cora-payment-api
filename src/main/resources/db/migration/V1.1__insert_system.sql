@@ -1,0 +1,12 @@
+INSERT INTO reason (id, created_at, description, enable, name, updated_at) VALUES (1, NOW(), 'Comprei errado',1, 'bought_wrong', NOW() );
+INSERT INTO reason (id, created_at, description, enable, name, updated_at) VALUES (2, NOW(), 'Não quero mais',1, 'not_want_anymore', NOW() );
+INSERT INTO reason (id, created_at, description, enable, name, updated_at) VALUES (3, NOW(), 'Recebi um produto diferente',1, 'received_different_product', NOW() );
+INSERT INTO reason (id, created_at, description, enable, name, updated_at) VALUES (4, NOW(), 'Entrega está atrasada',1, 'delivery_delayed', NOW() );
+INSERT INTO reason (id, created_at, description, enable, name, updated_at) VALUES (5, NOW(), 'Faltam peças',1, 'parts_missing', NOW() );
+INSERT INTO reason (id, created_at, description, enable, name, updated_at) VALUES (6, NOW(), 'Não funciona/ com defeito',1, 'not_working_or_faulty', NOW() );
+INSERT INTO reason (id, created_at, description, enable, name, updated_at) VALUES (7, NOW(), 'Está quebrado/ riscado/ amassado',1, 'is_broken_scratched_crumpled', NOW() );
+INSERT INTO reason (id, created_at, description, enable, name, updated_at) VALUES (8, NOW(), 'Não fiz essa compra',1, 'i_did_not_make_purchase', NOW() );
+INSERT INTO reason (id, created_at, description, enable, name, updated_at) VALUES (9, NOW(), 'Recebi produto a mais do que comprei',1, 'received_more_than_bought', NOW() );
+INSERT INTO reason (id, created_at, description, enable, name, updated_at) VALUES (10, NOW(), 'Endereço errado',1, 'wrong_address', NOW() );
+INSERT INTO reason (id, created_at, description, enable, name, updated_at) VALUES (11, NOW(), 'Produto em devolução/ devolvido',1, 'product_returned', NOW() );
+INSERT INTO reason (id, created_at, description, enable, name, updated_at) VALUES (12, NOW(), 'Insatisfação com o Produto',1, 'dissatisfaction_with_product', NOW() );

@@ -1,0 +1,76 @@
+application:
+  env: ${ENV:development}
+  name: '@pom.name@'
+  description: '@pom.description@'
+  version: '@pom.version@'
+  retry:
+    maxAttempts: ${RETRY_MAX_ATTEMPTS:3}
+    backOffDelay: ${RETRY_BACK_OFF_DELAY:500}
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+spring:
+  datasource:
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+    hikari:
+      minimumIdle: ${HIKARI_MINIMUM_IDLE:10}
+      maximumPoolSize: ${HIKARI_MAXIMUM_POLL_SIZE:10}
+
+  jpa:
+    hibernate.ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+
+  flyway:
+    check-location: true
+    enabled: true
+    url: ${DATASOURCE_URL}
+    user: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      fail-on-empty-beans: false
+
+  security:
+    user:
+      name: ${SECURITY_USER}
+      password: ${SECURITY_PASSWORD}
+
+  main:
+    allow-bean-definition-overriding: true
+
+jwt:
+  secretKey: ${JWT_SECRET_KEY:stubJWT}
+
+server.port: ${PORT:8080}
+
+apigee:
+  url: ${APIGEE_URL}
+  client:
+    id: ${APIGEE_CLIENT_ID}
+    secret: ${APIGEE_CLIENT_SECRET}
+
+sentry:
+  dsn: ${SENTRY}
+
+aws:
+  regionName: ${AWS_SQS_REGION_NAME}
+  accessKeyId: ${AWS_SQS_REGION_ACCESS_KEY_ID}
+  secretAccessKey: ${AWS_SQS_REGION_SECRET_ACCESS_KEY_ID}
+  sqs:
+    parallelSQS: ${AWS_SQS_PARALLEL_SQS:10}
+    queue:
+      name: ${AWS_SQS_QUEUE}

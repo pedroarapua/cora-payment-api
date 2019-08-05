@@ -1,0 +1,61 @@
+application:
+  env: test
+  name: '@pom.name@'
+  description: '@pom.description@'
+  version: '@pom.version@'
+  retry:
+    maxAttempts: 3
+    backOffDelay: 5000
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/payment?useSSL=false
+    username: payment
+    password: payment
+    hikari:
+      minimumIdle: 10
+      maximumPoolSize: 10
+
+  jpa:
+    hibernate.ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+
+  flyway:
+    check-location: true
+    enabled: true
+    url: jdbc:mysql://127.0.0.1:3306/payment?useSSL=false
+    username: payment
+    password: payment
+
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      fail-on-empty-beans: false
+
+  security:
+    user:
+      name: payment
+      password: payment
+
+  main:
+    allow-bean-definition-overriding: true
+
+jwt:
+  secretKey: stubJWT
+
+server.port: 8080
+
+sentry:
+  dsn:
