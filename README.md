@@ -52,11 +52,9 @@ Config environment variables according to specific environment `src/main/applica
 | DATASOURCE_PASSWORD | Password of database | | :white_check_mark: |
 | HIKARI_MINIMUM_IDLE | Minimum quantity of connection pool | 10 | |
 | HIKARI_MAXIMUM_POLL_SIZE | Maximum quantity of connection pool | 10 | |
-| 
 | SECURITY_USER | User of Basic Authentication API | | :white_check_mark: |
 | SECURITY_PASSWORD | Password of Basic Authentication API | | :white_check_mark: |
 | JWT_SECRET_KEY | Salt do JWT | stubJWT | |
-|
 | SENTRY | DSN to connect in Sentry | | :white_check_mark: |
 | ENV | App environment (development, staging or production) | development | |
 
