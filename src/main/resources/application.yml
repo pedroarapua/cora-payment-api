@@ -3,9 +3,6 @@ application:
   name: '@pom.name@'
   description: '@pom.description@'
   version: '@pom.version@'
-  retry:
-    maxAttempts: ${RETRY_MAX_ATTEMPTS:3}
-    backOffDelay: ${RETRY_BACK_OFF_DELAY:500}
 
 management:
   endpoint:
@@ -44,10 +41,9 @@ spring:
     serialization:
       fail-on-empty-beans: false
 
-  security:
-    user:
-      name: ${SECURITY_USER}
-      password: ${SECURITY_PASSWORD}
+  security:   
+    basic:
+      enabled: false
 
   main:
     allow-bean-definition-overriding: true
@@ -55,22 +51,8 @@ spring:
 jwt:
   secretKey: ${JWT_SECRET_KEY:stubJWT}
 
-server.port: ${PORT:8080}
-
-apigee:
-  url: ${APIGEE_URL}
-  client:
-    id: ${APIGEE_CLIENT_ID}
-    secret: ${APIGEE_CLIENT_SECRET}
+server:
+   port: ${PORT:8080}
 
 sentry:
   dsn: ${SENTRY}
-
-aws:
-  regionName: ${AWS_SQS_REGION_NAME}
-  accessKeyId: ${AWS_SQS_REGION_ACCESS_KEY_ID}
-  secretAccessKey: ${AWS_SQS_REGION_SECRET_ACCESS_KEY_ID}
-  sqs:
-    parallelSQS: ${AWS_SQS_PARALLEL_SQS:10}
-    queue:
-      name: ${AWS_SQS_QUEUE}

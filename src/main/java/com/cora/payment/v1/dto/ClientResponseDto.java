@@ -1,9 +1,12 @@
 package com.cora.payment.v1.dto;
 
 import java.io.Serializable;
+import java.util.UUID;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,13 +17,16 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
-@ToString
-@Builder
-public class ClientDto implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+@ToString 
+public class ClientResponseDto extends ClientRequestDto implements Serializable {
 
   private static final long serialVersionUID = -6870181596836157424L;
 
-  private String id;
+  @NotNull
+  private UUID id;
+  @NotBlank
+  private String name;
+
   
 }

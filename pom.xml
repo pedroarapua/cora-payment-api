@@ -37,6 +37,8 @@
         <randombeans.version>3.9.0</randombeans.version>
         <maven-release-plugin-version>2.5.3</maven-release-plugin-version>
         <java.faker>0.18</java.faker>
+        <modelmapper.version>2.3.0</modelmapper.version>
+        <springfox-swagger.version>2.9.2</springfox-swagger.version>
         <m2e.apt.activation>disabled</m2e.apt.activation>
     </properties>
 
@@ -44,10 +46,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -118,6 +116,22 @@
             <groupId>io.github.benas</groupId>
             <artifactId>random-beans</artifactId>
             <version>${randombeans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+  			<artifactId>modelmapper</artifactId>
+            <version>${modelmapper.version}</version>
+        </dependency>
+        <!-- swagger -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${springfox-swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${springfox-swagger.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.retry</groupId>
