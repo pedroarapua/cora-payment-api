@@ -1,4 +1,4 @@
-package com.cora.payment.factory;
+package com.organization.payment.factory;
 
 import java.io.Serializable;
 

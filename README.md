@@ -1,8 +1,8 @@
 # Payment Api
 
-> Payment Api is an API project of Cora
+> Payment Api is an API project of Organization
 
-Payment Api is responsible to process all payments in Cora Bank
+Payment Api is responsible to process all payments in Organization
 
 ![image](https://www.example.com/image.jpg)
 

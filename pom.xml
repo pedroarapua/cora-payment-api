@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.cora</groupId>
-    <artifactId>cora-payment-api</artifactId>
+    <groupId>com.organization</groupId>
+    <artifactId>payment-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -37,6 +37,9 @@
         <randombeans.version>3.9.0</randombeans.version>
         <maven-release-plugin-version>2.5.3</maven-release-plugin-version>
         <java.faker>0.18</java.faker>
+        <modelmapper.version>2.3.0</modelmapper.version>
+        <springfox-swagger.version>2.9.2</springfox-swagger.version>
+        <sonar.version>3.4.0.905</sonar.version>
         <m2e.apt.activation>disabled</m2e.apt.activation>
     </properties>
 
@@ -47,7 +50,11 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
@@ -110,6 +117,22 @@
             <groupId>io.github.benas</groupId>
             <artifactId>random-beans</artifactId>
             <version>${randombeans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+  			<artifactId>modelmapper</artifactId>
+            <version>${modelmapper.version}</version>
+        </dependency>
+        <!-- swagger -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${springfox-swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${springfox-swagger.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.retry</groupId>
@@ -248,6 +271,15 @@
                 </configuration>
             </plugin>
         </plugins>
+        <pluginManagement>
+	        <plugins>
+	            <plugin>
+	                <groupId>org.sonarsource.scanner.maven</groupId>
+	                <artifactId>sonar-maven-plugin</artifactId>
+	                <version>${sonar.version}</version>
+	            </plugin>
+	        </plugins>
+	    </pluginManagement>
     </build>
 
     <repositories>

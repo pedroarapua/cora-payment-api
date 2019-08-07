@@ -1,4 +1,4 @@
-package com.cora.payment.config;
+package com.organization.payment.config;
 
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;

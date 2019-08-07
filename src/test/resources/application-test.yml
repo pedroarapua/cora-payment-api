@@ -3,9 +3,6 @@ application:
   name: '@pom.name@'
   description: '@pom.description@'
   version: '@pom.version@'
-  retry:
-    maxAttempts: 3
-    backOffDelay: 5000
 
 management:
   endpoint:
@@ -44,10 +41,9 @@ spring:
     serialization:
       fail-on-empty-beans: false
 
-  security:
-    user:
-      name: payment
-      password: payment
+  security:   
+    basic:
+      enabled: false
 
   main:
     allow-bean-definition-overriding: true
@@ -55,7 +51,8 @@ spring:
 jwt:
   secretKey: stubJWT
 
-server.port: 8080
+server:
+  port: 8080
 
 sentry:
   dsn:

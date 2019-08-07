@@ -1,4 +1,4 @@
-package com.cora.payment.config;
+package com.organization.payment.config;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ControllerAdvice;
