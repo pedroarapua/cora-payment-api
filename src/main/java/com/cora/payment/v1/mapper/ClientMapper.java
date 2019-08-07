@@ -4,6 +4,8 @@ import com.cora.payment.entity.ClientEntity;
 import com.cora.payment.v1.dto.ClientRequestDto;
 import com.cora.payment.v1.dto.ClientResponseDto;
 
+import java.util.Optional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,7 +19,7 @@ public class ClientMapper {
     this.modelMapper = modelMapper; 
   }
   
-  public ClientResponseDto convertToDto(final ClientEntity client) {
+  public ClientResponseDto convertToResponseDto(final ClientEntity client) {
     return this.modelMapper.map(client, ClientResponseDto.class);
   }
   

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ClientFactory extends AbstractFactory {
+public class ClientEntityFactory extends AbstractFactory {
 
   @Autowired
   private ClientRepository repository;

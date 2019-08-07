@@ -1,7 +1,7 @@
 package com.cora.payment.repository;
 
 import com.cora.payment.commons.RepositoryGenericTest;
-import com.cora.payment.factory.ClientFactory;
+import com.cora.payment.factory.ClientEntityFactory;
 import com.cora.payment.entity.ClientEntity;
 
 import org.junit.Assert;
@@ -14,7 +14,7 @@ public class ClientRepositoryTest extends RepositoryGenericTest {
   private ClientRepository clientRepository;
 
   @Autowired
-  private ClientFactory clientFactory;
+  private ClientEntityFactory clientFactory;
 
   @Test
   public void save() {
