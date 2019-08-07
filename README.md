@@ -45,8 +45,6 @@ Config environment variables according to specific environment `src/main/applica
 
 | Name | Description | Default Value | Required |
 | -- | -- | -- | -- |
-| RETRY_MAX_ATTEMPTS | Maximum quantity of retries to call an API | 3 | |
-| RETRY_BACK_OFF_DELAY | Delay to execute again call an API | 500 | |
 | DATASOURCE_URL | Url JDBC to connect on database | | :white_check_mark: |
 | DATASOURCE_USERNAME | Username of database | | :white_check_mark: |
 | DATASOURCE_PASSWORD | Password of database | | :white_check_mark: |
@@ -84,6 +82,14 @@ sdk use java 11.0.2-open
 sdk use java 11.0.2-open
 ./mvnw clean install jacoco:report
 ```
+
+**Running SonarQube:**
+
+```sh
+./mvnw sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.login={token} -Dsonar.organization=pedroarapua-github -Dsonar.projectKey=pedroarapua-payment-api -Dsonar.projectName=payment-api -Dsonar.sources=src/main/java -Dsonar.sourceEncoding=UTF-8 -Dsonar.exclusions='target/**,src/main/resources/**' -Dsonar.java.binaries=target
+```
+
+Open [SonarCloud](https://sonarcloud.io/dashboard?id=pedroarapua-payment-api) to see the results.
 
 **Running Project in local environment:**
 

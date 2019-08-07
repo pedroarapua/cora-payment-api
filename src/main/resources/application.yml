@@ -15,9 +15,9 @@ management:
 
 spring:
   datasource:
-    url: ${DATASOURCE_URL}
-    username: ${DATASOURCE_USERNAME}
-    password: ${DATASOURCE_PASSWORD}
+    url: "jdbc:mysql://127.0.0.1:3306/payment?useSSL=false"
+    username: ${DATASOURCE_USERNAME:payment}
+    password: ${DATASOURCE_PASSWORD:payment}
     hikari:
       minimumIdle: ${HIKARI_MINIMUM_IDLE:10}
       maximumPoolSize: ${HIKARI_MAXIMUM_POLL_SIZE:10}
@@ -32,9 +32,9 @@ spring:
   flyway:
     check-location: true
     enabled: true
-    url: ${DATASOURCE_URL}
-    user: ${DATASOURCE_USERNAME}
-    password: ${DATASOURCE_PASSWORD}
+    url: jdbc:mysql://127.0.0.1:3306/payment?useSSL=false
+    user: ${DATASOURCE_USERNAME:payment}
+    password: ${DATASOURCE_PASSWORD:payment}
 
   jackson:
     default-property-inclusion: non_null
