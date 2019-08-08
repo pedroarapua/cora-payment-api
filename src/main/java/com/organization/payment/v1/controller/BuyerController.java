@@ -1,9 +1,9 @@
 package com.organization.payment.v1.controller;
 
-import com.organization.payment.business.ClientBusiness;
-import com.organization.payment.entity.ClientEntity;
-import com.organization.payment.v1.dto.ClientRequestDto;
-import com.organization.payment.v1.dto.ClientResponseDto;
+import com.organization.payment.business.BuyerBusiness;
+import com.organization.payment.entity.BuyerEntity;
+import com.organization.payment.v1.dto.BuyerRequestDto;
+import com.organization.payment.v1.dto.BuyerResponseDto;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,31 +22,31 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/paymentapi/clients")
-@Api(value = "Client")
-public class ClientController {
+@RequestMapping("/v1/paymentapi/buyers")
+@Api(value = "Buyer")
+public class BuyerController {
 
-  private final ClientBusiness clientBusiness; 
+  private final BuyerBusiness buyerBusiness; 
   private final ModelMapper modelMapper;
   
-  @Autowired public ClientController(
-      final ClientBusiness clientBusiness,
+  @Autowired public BuyerController(
+      final BuyerBusiness buyerBusiness,
       final ModelMapper modelMapper) { 
-    this.clientBusiness = clientBusiness;
+    this.buyerBusiness = buyerBusiness;
     this.modelMapper = modelMapper;
   }
 
-  @ApiOperation(value = "Create a new Client")
+  @ApiOperation(value = "Create a new Buyer")
   @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(code = HttpStatus.CREATED)
   @ResponseBody
-  public ClientResponseDto post(@RequestBody @Valid final ClientRequestDto clientRequestDto) {
+  public BuyerResponseDto post(@RequestBody @Valid final BuyerRequestDto buyerRequestDto) {
     
-    ClientEntity clientEntity = this.modelMapper.map(clientRequestDto, ClientEntity.class);
-    ClientResponseDto clientDtoResponse = this.modelMapper.map(
-        this.clientBusiness.save(clientEntity), ClientResponseDto.class);
+    BuyerEntity buyerEntity = this.modelMapper.map(buyerRequestDto, BuyerEntity.class);
+    BuyerResponseDto buyerDtoResponse = this.modelMapper.map(
+        this.buyerBusiness.save(buyerEntity), BuyerResponseDto.class);
 
-    return clientDtoResponse;
+    return buyerDtoResponse;
   }
 
 }
