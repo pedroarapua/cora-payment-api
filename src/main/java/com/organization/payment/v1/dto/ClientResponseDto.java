@@ -3,7 +3,6 @@ package com.organization.payment.v1.dto;
 import java.io.Serializable;
 import java.util.UUID;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -25,8 +24,5 @@ public class ClientResponseDto extends ClientRequestDto implements Serializable 
 
   @NotNull
   private UUID id;
-  @NotBlank
-  private String name;
-
   
 }

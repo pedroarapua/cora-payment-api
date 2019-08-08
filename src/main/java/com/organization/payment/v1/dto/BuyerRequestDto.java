@@ -20,12 +20,21 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @Builder
-public class ClientRequestDto implements Serializable {
+public class BuyerRequestDto implements Serializable {
 
   private static final long serialVersionUID = -6870181596836157424L;
 
-  @NotBlank(message = "Please provide the name of Client")
+  @NotBlank(message = "Please provide the name of Buyer")
   @Size(max = 255)
   private String name;
+  
+  @NotBlank(message = "Please provide the email of Buyer")
+  @Size(max = 100)
+  private String email;
+  
+  @NotBlank(message = "Please provide the cpf of Buyer")
+  @Size(min = 11, max = 11, message = "cpf entered [${validatedValue}] "
+      + "is invalid. It must be between {min} and {max}")
+  private String cpf;
   
 }
