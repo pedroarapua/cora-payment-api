@@ -7,6 +7,7 @@ import com.organization.payment.entity.CreditCardEntity;
 import com.organization.payment.v1.dto.CreditCardRequestDto;
 import com.organization.payment.v1.dto.CreditCardResponseDto;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 import java.util.Optional;
@@ -28,7 +29,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/paymentapi/clients")
+@RequestMapping("/v1/paymentapi/buyers")
+@Api(value = "Buyer")
 public class CreditCardController {
 
   private final CreditCardBusiness creditCardBusiness;
@@ -45,7 +47,7 @@ public class CreditCardController {
   }
 
   @ApiOperation(value = "Create a new Credit Card to the Client")
-  @PostMapping(value = "/{iid}/creditcards", consumes = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = "/{id}/creditcards", consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(code = HttpStatus.CREATED)
   @ResponseBody
   public CreditCardResponseDto post(
@@ -58,7 +60,8 @@ public class CreditCardController {
         new EntityNotFoundException("Buyer"));
 
     
-    CreditCardEntity creditCardEntity = this.modelMapper.map(creditCardRequestDto, CreditCardEntity.class);
+    CreditCardEntity creditCardEntity = this.modelMapper.map(creditCardRequestDto, 
+        CreditCardEntity.class);
     creditCardEntity.setBuyer(buyer);
     
     return this.modelMapper.map(

@@ -1,11 +1,13 @@
 package com.organization.payment.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
@@ -44,6 +46,9 @@ public class BuyerEntity implements Serializable {
   
   @Column(nullable = false)
   private String cpf;
+  
+  @OneToMany(mappedBy = "buyer")
+  private List<CreditCardEntity> creditCards;
 
   @PrePersist
   protected void prePersist() {

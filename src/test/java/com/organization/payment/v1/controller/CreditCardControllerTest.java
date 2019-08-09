@@ -10,9 +10,11 @@ import java.text.MessageFormat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.organization.payment.commons.ControllerGenericTest;
-import com.organization.payment.factory.ClientRequestDtoFactory;
-import com.organization.payment.v1.controller.ClientController;
-import com.organization.payment.v1.dto.ClientRequestDto;
+import com.organization.payment.entity.BuyerEntity;
+import com.organization.payment.factory.BuyerEntityFactory;
+import com.organization.payment.factory.CreditCardRequestDtoFactory;
+import com.organization.payment.repository.BuyerRepository;
+import com.organization.payment.v1.dto.CreditCardRequestDto;
 
 import lombok.SneakyThrows;
 
@@ -26,37 +28,48 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-public class ClientControllerTest extends ControllerGenericTest<ClientController> {
+public class CreditCardControllerTest extends ControllerGenericTest<CreditCardController> {
 
   @Autowired
   private WebApplicationContext webApplicationContext;
 
   @Autowired
-  private ClientRequestDtoFactory clientRequestDtoFactory;
-
+  private CreditCardRequestDtoFactory creditCardRequestDtoFactory;
+  
+  @Autowired
+  private BuyerEntityFactory buyerEntityFactory;
+  
+  @Autowired
+  private BuyerRepository buyerRepository;
+  
   private MockMvc mockMvc;
   private String uri;
 
-  public ClientControllerTest() {
+  public CreditCardControllerTest() {
   }
 
   @Before
-  public void before() {
+  public void setUp() {
     this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
-    this.uri = MessageFormat.format("{0}{1}", PATH_RESOURCE, "clients");
+    this.uri = MessageFormat.format("{0}{1}", PATH_RESOURCE, "buyers");
   }
-
+  
+  
   @Test
   @Rollback
   @SneakyThrows
-  public void postClientSuccess() {
+  public void postCreditCardSuccess() {
+    BuyerEntity buyerEntity = this.buyerEntityFactory.simple();
+    buyerEntity = this.buyerRepository.save(buyerEntity);
 
-    final ClientRequestDto clientRequestDto = this.clientRequestDtoFactory.simple();
+    final CreditCardRequestDto creditCardRequestDto = this.creditCardRequestDtoFactory.simple();
         
     this.mockMvc.perform(
-        post(this.uri)
+        post(String.format("%s/%s/creditcards", 
+            this.uri, 
+            buyerEntity.getId()))
         .contentType(MediaType.APPLICATION_JSON)
-        .content(new ObjectMapper().writeValueAsBytes(clientRequestDto)))
+        .content(new ObjectMapper().writeValueAsBytes(creditCardRequestDto)))
         .andDo(print())
         .andExpect(status().isCreated())
         .andReturn()
@@ -69,22 +82,22 @@ public class ClientControllerTest extends ControllerGenericTest<ClientController
   @Test
   @Rollback
   @SneakyThrows
-  public void postClientWithEmptyName() {
-    final ClientRequestDto clientRequestDto = ClientRequestDto
-        .builder()
-        .build();
-
+  public void postInvalidUUID() {
+    
     this.mockMvc.perform(
-        post(this.uri)
+        post(String.format("%s/%s/creditcards", 
+            this.uri, 
+            "invalid"))
         .contentType(MediaType.APPLICATION_JSON)
-        .content(new ObjectMapper().writeValueAsBytes(clientRequestDto)))
+        .content(""))
         .andDo(print())
         .andExpect(status().is4xxClientError())
         .andExpect(jsonPath("$.status", equalTo(400)))
-        .andExpect(jsonPath("$.errors[0]", equalTo("Please provide the name of Client")))
+        .andExpect(jsonPath("$.errors[0]", equalTo("id should be of type java.util.UUID")))
         .andReturn()
         .getResponse()
         .getContentAsString();
+
   }
 
 }

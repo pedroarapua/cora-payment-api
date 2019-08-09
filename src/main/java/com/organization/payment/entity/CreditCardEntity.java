@@ -1,5 +1,7 @@
 package com.organization.payment.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -20,8 +22,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import org.hibernate.annotations.Type;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Getter
 @Setter
@@ -56,7 +56,6 @@ public class CreditCardEntity implements Serializable {
   private String issuer;
 
   @ManyToOne(optional = false)
-  @JsonIgnore
   @JoinColumn(name = "buyer_id")
   private BuyerEntity buyer;
 
