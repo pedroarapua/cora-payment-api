@@ -1,13 +1,13 @@
 package com.organization.payment.entity;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
@@ -29,30 +29,37 @@ import org.hibernate.annotations.Type;
 @EqualsAndHashCode(of = "id")
 @Builder
 @Entity
-@Table(name = "buyers")
-public class BuyerEntity implements Serializable {
+@Table(name = "credit_cards")
+public class CreditCardEntity implements Serializable {
 
-  private static final long serialVersionUID = 1L;
-  
+  private static final long serialVersionUID = -956876697219527005L;
+
   @Id
   @Type(type = "uuid-char")
   private UUID id;
-  
-  @Column(nullable = false)
-  private String name;
-  
-  @Column(nullable = false)
-  private String email;
-  
-  @Column(nullable = false)
-  private String cpf;
-  
-  @OneToMany(mappedBy = "buyer")
-  private List<CreditCardEntity> creditCards;
+
+  @Column
+  private String number;
+
+  @Column
+  private String holderName;
+
+  @Column
+  private Integer month;
+
+  @Column
+  private Integer year;
+
+  @Column
+  private String issuer;
+
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "buyer_id")
+  private BuyerEntity buyer;
 
   @PrePersist
   protected void prePersist() {
-    id = UUID.randomUUID();
+    this.id = UUID.randomUUID();
   }
 
 }

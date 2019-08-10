@@ -8,6 +8,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.text.MessageFormat;
 
+import javax.validation.constraints.Size;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.organization.payment.commons.ControllerGenericTest;
 import com.organization.payment.factory.ClientRequestDtoFactory;
@@ -16,6 +18,7 @@ import com.organization.payment.v1.dto.ClientRequestDto;
 
 import lombok.SneakyThrows;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,6 +65,8 @@ public class ClientControllerTest extends ControllerGenericTest<ClientController
         .andReturn()
         .getResponse()
         .getContentAsString();
+    
+    //TODO: Add validation response object
   }
   
   @Test
@@ -80,6 +85,29 @@ public class ClientControllerTest extends ControllerGenericTest<ClientController
         .andExpect(status().is4xxClientError())
         .andExpect(jsonPath("$.status", equalTo(400)))
         .andExpect(jsonPath("$.errors[0]", equalTo("Please provide the name of Client")))
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+  }
+  
+  @Test
+  @Rollback
+  @SneakyThrows
+  public void postClientWithInvalidNameLength() {
+    final Integer length = ClientRequestDto.class.getDeclaredField("name").getAnnotation(Size.class).max();
+    final String name = StringUtils.leftPad("", length + 1, 'A');
+    
+    final ClientRequestDto clientRequestDto = this.clientRequestDtoFactory.simple();
+    clientRequestDto.setName(name);
+
+    this.mockMvc.perform(
+        post(this.uri)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(new ObjectMapper().writeValueAsBytes(clientRequestDto)))
+        .andDo(print())
+        .andExpect(status().is4xxClientError())
+        .andExpect(jsonPath("$.status", equalTo(400)))
+        .andExpect(jsonPath("$.errors[0]", equalTo("size must be between 0 and " + length)))
         .andReturn()
         .getResponse()
         .getContentAsString();

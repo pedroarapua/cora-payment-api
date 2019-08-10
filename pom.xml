@@ -40,6 +40,7 @@
         <modelmapper.version>2.3.0</modelmapper.version>
         <springfox-swagger.version>2.9.2</springfox-swagger.version>
         <sonar.version>3.4.0.905</sonar.version>
+        <credit-card-validator.version>0.0.6</credit-card-validator.version>
         <m2e.apt.activation>disabled</m2e.apt.activation>
     </properties>
 
@@ -135,9 +136,10 @@
             <version>${springfox-swagger.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.retry</groupId>
-            <artifactId>spring-retry</artifactId>
-        </dependency>
+		  <groupId>br.com.moip</groupId>
+		  <artifactId>credit-card-validator</artifactId>
+		  <version>${credit-card-validator.version}</version>
+		</dependency>
         <dependency>
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
