@@ -8,6 +8,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.organization.payment.annotation.CreditCardNumber;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -29,6 +31,7 @@ public class CreditCardRequestDto implements Serializable {
 
   @NotBlank(message = "Please provide the number of CreditCard")
   @Size(max = 100)
+  @CreditCardNumber(message = "Please provide a valid CreditCard")
   // TODO: add validation to credit card number
   private String number;
 

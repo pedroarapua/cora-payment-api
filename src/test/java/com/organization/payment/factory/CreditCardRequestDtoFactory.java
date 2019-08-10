@@ -13,7 +13,7 @@ public class CreditCardRequestDtoFactory extends AbstractFactory<CreditCardReque
       .holderName("Pedro H F Dias")
       .month(1)
       .year(2020)
-      .number("111111111111")
+      .number("5555666677778884")
       .build();
   }
 }
