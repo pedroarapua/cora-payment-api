@@ -62,11 +62,12 @@ public class ClientControllerTest extends ControllerGenericTest<ClientController
         .content(new ObjectMapper().writeValueAsBytes(clientRequestDto)))
         .andDo(print())
         .andExpect(status().isCreated())
+        .andExpect(jsonPath("$.id").exists())
+        .andExpect(jsonPath("$.name").value(clientRequestDto.getName()))
         .andReturn()
         .getResponse()
         .getContentAsString();
     
-    //TODO: Add validation response object
   }
   
   @Test

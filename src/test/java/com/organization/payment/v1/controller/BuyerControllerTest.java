@@ -61,10 +61,13 @@ public class BuyerControllerTest extends ControllerGenericTest<BuyerController> 
         .content(new ObjectMapper().writeValueAsBytes(buyerRequestDto)))
         .andDo(print())
         .andExpect(status().isCreated())
+        .andExpect(jsonPath("$.id").exists())
+        .andExpect(jsonPath("$.cpf").value(buyerRequestDto.getCpf()))
+        .andExpect(jsonPath("$.email").value(buyerRequestDto.getEmail()))
+        .andExpect(jsonPath("$.name").value(buyerRequestDto.getName()))
         .andReturn()
         .getResponse()
         .getContentAsString();
-    //TODO: Add validation response object
   }
   
   @Test

@@ -14,6 +14,7 @@ public class CreditCardRequestDtoFactory extends AbstractFactory<CreditCardReque
       .month(1)
       .year(2020)
       .number("5555666677778884")
+      .cvv("101")
       .build();
   }
 }

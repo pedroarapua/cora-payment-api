@@ -6,6 +6,9 @@ import com.organization.payment.repository.CreditCardRepository;
 
 import br.com.moip.validators.CreditCard;
 
+import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,4 +30,8 @@ public class CreditCardBusinessImpl implements CreditCardBusiness {
     return this.creditCardRepository.save(creditCard);
   }
   
+  @Override
+  public Optional<CreditCardEntity> findById(UUID id) {
+    return this.creditCardRepository.findById(id);
+  }
 }

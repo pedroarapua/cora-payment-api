@@ -49,6 +49,9 @@ public class BuyerEntity implements Serializable {
   
   @OneToMany(mappedBy = "buyer")
   private List<CreditCardEntity> creditCards;
+  
+  @OneToMany(mappedBy = "buyer")
+  private List<PaymentEntity> payments;
 
   @PrePersist
   protected void prePersist() {

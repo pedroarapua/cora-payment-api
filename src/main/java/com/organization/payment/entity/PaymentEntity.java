@@ -1,15 +1,16 @@
 package com.organization.payment.entity;
 
 import java.io.Serializable;
-import java.util.List;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
@@ -23,6 +24,9 @@ import lombok.ToString;
 
 import org.hibernate.annotations.Type;
 
+import com.organization.payment.enumeration.PaymentCreditCardStatusEnum;
+import com.organization.payment.enumeration.PaymentTypeEnum;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -31,8 +35,8 @@ import org.hibernate.annotations.Type;
 @EqualsAndHashCode(of = "id")
 @Builder
 @Entity
-@Table(name = "credit_cards")
-public class CreditCardEntity implements Serializable {
+@Table(name = "payments")
+public class PaymentEntity implements Serializable {
 
   private static final long serialVersionUID = -956876697219527005L;
 
@@ -40,30 +44,31 @@ public class CreditCardEntity implements Serializable {
   @Type(type = "uuid-char")
   private UUID id;
 
-  @Column
-  private String number;
+  @Column(nullable = false)
+  private BigDecimal amount;
 
-  @Column
-  private String holderName;
-
-  @Column
-  private Integer month;
-
-  @Column
-  private Integer year;
-
-  @Column
-  private String issuer;
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private PaymentTypeEnum type;
   
-  @Column
-  private String cvv;
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = true)
+  private PaymentCreditCardStatusEnum status;
+  
+  @Column(nullable = true)
+  private String barcodeNumber;
+  
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "client_id")
+  private ClientEntity client;
 
   @ManyToOne(optional = false)
   @JoinColumn(name = "buyer_id")
   private BuyerEntity buyer;
   
-  @OneToMany(mappedBy = "creditCard")
-  private List<PaymentEntity> payments;
+  @ManyToOne(optional = true)
+  @JoinColumn(name = "credit_card_id")
+  private CreditCardEntity creditCard;
 
   @PrePersist
   protected void prePersist() {
