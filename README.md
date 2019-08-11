@@ -7,7 +7,7 @@
 
 Payment Api is responsible to process all payments in Organization
 
-![image](https://www.example.com/image.jpg)
+![image](https://blog.invoiceberry.com/wp-content/uploads/2016/05/VX680_verifone_credit_card_machine_small_business.jpg)
 
 ## Requirements
 ```sh
