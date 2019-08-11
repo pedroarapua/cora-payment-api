@@ -11,8 +11,7 @@ Payment Api is responsible to process all payments in Organization
 
 ## Requirements
 ```sh
-Java 11
-Docker Compose
+Java 11 Open
 Plugin Lombok
 Docker and Docker Compose
 ```
@@ -20,20 +19,10 @@ Docker and Docker Compose
 ## Installation OS X & Linux:
 
 
-**Java 11 - SDKMAN:**
-
-```sh
-https://sdkman.io/install
-sdk i java 11.0.2-open
-```
-
 **Docker compose:**
-
-Go to root folder and execute:
 
 ```sh
 https://docs.docker.com/compose/install/
-docker-compose up -d
 ```
 
 **Lombok plugin:**
@@ -48,37 +37,34 @@ Config environment variables according to specific environment `src/main/applica
 
 | Name | Description | Default Value | Required |
 | -- | -- | -- | -- |
-| DATASOURCE_URL | Url JDBC to connect on database | | :white_check_mark: |
-| DATASOURCE_USERNAME | Username of database | | :white_check_mark: |
-| DATASOURCE_PASSWORD | Password of database | | :white_check_mark: |
-| HIKARI_MINIMUM_IDLE | Minimum quantity of connection pool | 10 | |
-| HIKARI_MAXIMUM_POLL_SIZE | Maximum quantity of connection pool | 10 | |
-| ENV | App environment (development, staging or production) | development | |
+| DATASOURCE_URL | Url JDBC to connect on database | jdbc:mysql://127.0.0.1:3306/payment?useSSL=false | :white_check_mark: |
+| DATASOURCE_USERNAME | Username of database | payment | :white_check_mark: |
+| DATASOURCE_PASSWORD | Password of database | payment | :white_check_mark: |
+| HIKARI_MINIMUM_IDLE | Minimum quantity of connection pool | 10 | :white_check_mark: |
+| HIKARI_MAXIMUM_POLL_SIZE | Maximum quantity of connection pool | 10 | :white_check_mark: |
+| ENV | App environment (development, staging or production) | development | :white_check_mark: |
 
 Keep the file *src/test/application-test.yml* and table environments always up to date.
-
-**Getting environment variables:**
-
-```
-  @Value("${datasource.url}")
-  private String datasourceUrl;
-```
 
 ## Setup to start Development
 
 Go to project root folder:
 
+**Starting MySQL DataBase:**
+
+```sh
+docker-compose up -d
+```
+
 **Compiling Project:**
 
 ```sh
-sdk use java 11.0.2-open
 ./mvnw clean package
 ```
 
 **Running Converage:**
 
 ```sh
-sdk use java 11.0.2-open
 ./mvnw clean install jacoco:report
 ```
 
@@ -95,7 +81,6 @@ Check Coverage Page: ``{workdir}/target/site/jacoco/index.html``.
 **Running Project in local environment:**
 
 ```sh
-sdk use java 11.0.2-open
 ./mvnw clean spring-boot:run -Dspring-boot.run.profiles=local
 ```
 
