@@ -6,6 +6,9 @@ import com.organization.payment.enumeration.PaymentCreditCardStatusEnum;
 import com.organization.payment.enumeration.PaymentTypeEnum;
 import com.organization.payment.repository.PaymentRepository;
 
+import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +33,11 @@ public class PaymentBusinessImpl implements PaymentBusiness {
     }
     
     return this.paymentRepository.save(payment);
+  }
+  
+  @Override
+  public Optional<PaymentEntity> findById(UUID id) {
+    return this.paymentRepository.findById(id);
   }
   
 }

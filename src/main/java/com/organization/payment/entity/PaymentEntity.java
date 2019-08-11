@@ -1,5 +1,8 @@
 package com.organization.payment.entity;
 
+import com.organization.payment.enumeration.PaymentCreditCardStatusEnum;
+import com.organization.payment.enumeration.PaymentTypeEnum;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -23,9 +26,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import org.hibernate.annotations.Type;
-
-import com.organization.payment.enumeration.PaymentCreditCardStatusEnum;
-import com.organization.payment.enumeration.PaymentTypeEnum;
 
 @Getter
 @Setter

@@ -1,13 +1,15 @@
 package com.organization.payment.validator;
 
-import org.apache.commons.beanutils.BeanUtils;
-
 import com.organization.payment.annotation.NotNullIfAnotherFieldHasValue;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class NotNullIfAnotherFieldHasValueValidator implements ConstraintValidator<NotNullIfAnotherFieldHasValue, Object> {
+import org.apache.commons.beanutils.BeanUtils;
+
+public class NotNullIfAnotherFieldHasValueValidator 
+    implements ConstraintValidator<NotNullIfAnotherFieldHasValue, Object> {
+  
   private String fieldName;
   private String expectedFieldValue;
   private String dependFieldName;

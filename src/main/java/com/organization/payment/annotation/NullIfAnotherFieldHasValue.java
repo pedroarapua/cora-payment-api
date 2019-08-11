@@ -1,17 +1,17 @@
 package com.organization.payment.annotation;
 
-import com.organization.payment.validator.NullIfAnotherFieldHasValueValidator;
-
-import javax.validation.Constraint;
-import javax.validation.Payload;
-import java.lang.annotation.Documented;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+import com.organization.payment.validator.NullIfAnotherFieldHasValueValidator;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+import javax.validation.Constraint;
+import javax.validation.Payload;
 
 @Target({TYPE, ANNOTATION_TYPE})
 @Retention(RUNTIME)
@@ -19,23 +19,23 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 public @interface NullIfAnotherFieldHasValue {
 
-    String fieldName();
+  String fieldName();
 
-    String fieldValue();
+  String fieldValue();
 
-    String dependFieldName();
+  String dependFieldName();
 
-    String message() default "NullIfAnotherFieldHasValue.message";
+  String message() default "NullIfAnotherFieldHasValue.message";
 
-    Class<?>[] groups() default {};
+  Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default {};
+  Class<? extends Payload>[] payload() default {};
 
-    @Target({TYPE, ANNOTATION_TYPE})
-    @Retention(RUNTIME)
-    @Documented
-    @interface List {
-        NullIfAnotherFieldHasValue[] value();
-    }
+  @Target({TYPE, ANNOTATION_TYPE})
+  @Retention(RUNTIME)
+  @Documented
+  @interface List {
+    NullIfAnotherFieldHasValue[] value();
+  }
 
 }

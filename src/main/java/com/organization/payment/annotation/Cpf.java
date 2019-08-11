@@ -1,6 +1,6 @@
 package com.organization.payment.annotation;
 
-import com.organization.payment.validator.CPFValidator;
+import com.organization.payment.validator.CpfValidator;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -16,11 +16,11 @@ import javax.validation.Payload;
  *
  * @author Pedro Henrique F. Dias
  */
-@Constraint(validatedBy = {CPFValidator.class})
+@Constraint(validatedBy = {CpfValidator.class})
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(value = RetentionPolicy.RUNTIME)
 @Documented
-public @interface CPF {
+public @interface Cpf {
 
   String message() default "invalid cpf";
 

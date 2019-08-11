@@ -45,6 +45,7 @@ public class PaymentEntityFactory extends AbstractFactory<PaymentEntity> {
       .amount(new BigDecimal(0.01))
       .buyer(this.buyerEntityFactory.simple())
       .client(this.clientEntityFactory.simple())
+      .barcodeNumber("11111111111111111111111111111111111111111111")
       .type(PaymentTypeEnum.BANK_SLIP)
       .build();
   }

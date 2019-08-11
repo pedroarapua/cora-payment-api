@@ -1,8 +1,8 @@
 package com.organization.payment.validator;
 
-import com.organization.payment.annotation.CreditCardNumber;
-
 import br.com.moip.validators.CreditCard;
+
+import com.organization.payment.annotation.CreditCardNumber;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -10,7 +10,9 @@ import javax.validation.ConstraintValidatorContext;
 public class CreditCardNumberValidator implements ConstraintValidator<CreditCardNumber, String> {
 
   @Override
-  public void initialize(CreditCardNumber constraintAnnotation) {}
+  public void initialize(CreditCardNumber constraintAnnotation) {
+    
+  }
 
   @Override
   public boolean isValid(String value, ConstraintValidatorContext context) {

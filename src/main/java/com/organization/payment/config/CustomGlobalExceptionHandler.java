@@ -101,7 +101,8 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
   
   //404
   @ExceptionHandler(value = { EntityNotFoundException.class })
-  protected ResponseEntity<Object> handleNotFound(final RuntimeException ex, final WebRequest request) {      
+  protected ResponseEntity<Object> handleNotFound(
+      final RuntimeException ex, final WebRequest request) {      
     
     String error = ex.getMessage() + " not found";
  

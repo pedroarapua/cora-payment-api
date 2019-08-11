@@ -7,8 +7,8 @@ import lombok.Getter;
 
 @AllArgsConstructor
 public enum PaymentCreditCardStatusEnum {
-  SUCCESS("success"),
-  FAILED("failed");
+  SUCCESS("SUCCESS"),
+  FAILED("FAILED");
 
   @Getter
   private final String text;
