@@ -25,6 +25,7 @@ public class CreditCardEntityFactory extends AbstractFactory<CreditCardEntity> {
       .month(1)
       .year(2020)
       .number("5555666677778884")
+      .cvv("101")
       .buyer(this.buyerEntityFactory.simple())
       .build();
   }

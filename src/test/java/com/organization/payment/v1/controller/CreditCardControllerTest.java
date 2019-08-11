@@ -24,6 +24,7 @@ import com.organization.payment.v1.dto.CreditCardRequestDto;
 import lombok.SneakyThrows;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.validator.constraints.Length;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -78,17 +79,22 @@ public class CreditCardControllerTest extends ControllerGenericTest<CreditCardCo
         .content(new ObjectMapper().writeValueAsBytes(creditCardRequestDto)))
         .andDo(print())
         .andExpect(status().isCreated())
+        .andExpect(jsonPath("$.id").exists())
+        .andExpect(jsonPath("$.cvv").value(creditCardRequestDto.getCvv()))
+        .andExpect(jsonPath("$.holderName").value(creditCardRequestDto.getHolderName()))
+        .andExpect(jsonPath("$.month").value(creditCardRequestDto.getMonth()))
+        .andExpect(jsonPath("$.number").value(creditCardRequestDto.getNumber()))
+        .andExpect(jsonPath("$.year").value(creditCardRequestDto.getYear()))
         .andReturn()
         .getResponse()
         .getContentAsString();
     
-    //TODO: Add validation response object
   }
   
   @Test
   @Rollback
   @SneakyThrows
-  public void postCreditCardWithInvalidCustomerId() {
+  public void postCreditCardWithInvalidBuyerId() {
     
     this.mockMvc.perform(
         post(String.format("%s/%s/creditcards", 
@@ -197,12 +203,9 @@ public class CreditCardControllerTest extends ControllerGenericTest<CreditCardCo
   @Test
   @Rollback
   @SneakyThrows
-  public void postCreditCardWithInvalidNumberLength() {
-    final Integer length = CreditCardRequestDto.class.getDeclaredField("number").getAnnotation(Size.class).max();
-    final String number = StringUtils.leftPad("", length + 1, '1');
-    
+  public void postCreditCardWithEmptyCVV() {
     final CreditCardRequestDto creditCardRequestDto = this.creditCardRequestDtoFactory.simple();
-    creditCardRequestDto.setNumber(number);
+    creditCardRequestDto.setCvv(null);
 
     this.mockMvc.perform(
         post(String.format("%s/%s/creditcards", 
@@ -213,7 +216,7 @@ public class CreditCardControllerTest extends ControllerGenericTest<CreditCardCo
         .andDo(print())
         .andExpect(status().is4xxClientError())
         .andExpect(jsonPath("$.status", equalTo(400)))
-        .andExpect(jsonPath("$.errors[0]", equalTo("size must be between 0 and " + length)))
+        .andExpect(jsonPath("$.errors[0]", equalTo("Please provide the cvv of CreditCard")))
         .andReturn()
         .getResponse()
         .getContentAsString();
@@ -239,6 +242,31 @@ public class CreditCardControllerTest extends ControllerGenericTest<CreditCardCo
         .andExpect(status().is4xxClientError())
         .andExpect(jsonPath("$.status", equalTo(400)))
         .andExpect(jsonPath("$.errors[0]", equalTo("size must be between 0 and " + length)))
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+  }
+  
+  @Test
+  @Rollback
+  @SneakyThrows
+  public void postCreditCardWithInvalidCvvLength() {
+    final Integer length = CreditCardRequestDto.class.getDeclaredField("cvv").getAnnotation(Length.class).max();
+    final String cvv = StringUtils.leftPad("", length + 1, '1');
+    
+    final CreditCardRequestDto creditCardRequestDto = this.creditCardRequestDtoFactory.simple();
+    creditCardRequestDto.setCvv(cvv);
+
+    this.mockMvc.perform(
+        post(String.format("%s/%s/creditcards", 
+            this.uri, 
+            UUID.randomUUID()))
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(new ObjectMapper().writeValueAsBytes(creditCardRequestDto)))
+        .andDo(print())
+        .andExpect(status().is4xxClientError())
+        .andExpect(jsonPath("$.status", equalTo(400)))
+        .andExpect(jsonPath("$.errors[0]", equalTo("length must be between " + length + " and " + length)))
         .andReturn()
         .getResponse()
         .getContentAsString();
@@ -331,7 +359,52 @@ public class CreditCardControllerTest extends ControllerGenericTest<CreditCardCo
         .andDo(print())
         .andExpect(status().is4xxClientError())
         .andExpect(jsonPath("$.status", equalTo(400)))
-        .andExpect(jsonPath("$.errors[0]", equalTo("Please provide a valid CreditCard")))
+        .andExpect(jsonPath("$.errors[0]", equalTo("Please provide a valid number of CreditCard")))
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+  }
+  
+  @Test
+  @Rollback
+  @SneakyThrows
+  public void postCreditCardWithInvalidCvv() {
+    final String cvv = "10A";
+    
+    final CreditCardRequestDto creditCardRequestDto = this.creditCardRequestDtoFactory.simple();
+    creditCardRequestDto.setCvv(cvv);
+
+    this.mockMvc.perform(
+        post(String.format("%s/%s/creditcards", 
+            this.uri, 
+            UUID.randomUUID()))
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(new ObjectMapper().writeValueAsBytes(creditCardRequestDto)))
+        .andDo(print())
+        .andExpect(status().is4xxClientError())
+        .andExpect(jsonPath("$.status", equalTo(400)))
+        .andExpect(jsonPath("$.errors[0]", equalTo("Please provide a valid cvv of CreditCard")))
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+  }
+  
+  @Test
+  @Rollback
+  @SneakyThrows
+  public void postCreditCardWithBuyerNotFound() {
+    final CreditCardRequestDto creditCardRequestDto = this.creditCardRequestDtoFactory.simple();
+  
+    this.mockMvc.perform(
+        post(String.format("%s/%s/creditcards", 
+            this.uri, 
+            UUID.randomUUID()))
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(new ObjectMapper().writeValueAsBytes(creditCardRequestDto)))
+        .andDo(print())
+        .andExpect(status().is4xxClientError())
+        .andExpect(jsonPath("$.status", equalTo(404)))
+        .andExpect(jsonPath("$.errors[0]", equalTo("Buyer not found")))
         .andReturn()
         .getResponse()
         .getContentAsString();

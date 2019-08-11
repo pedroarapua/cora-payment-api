@@ -6,7 +6,10 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Length;
 
 import com.organization.payment.annotation.CreditCardNumber;
 
@@ -30,9 +33,7 @@ public class CreditCardRequestDto implements Serializable {
   private static final long serialVersionUID = 5267931934989313385L;
 
   @NotBlank(message = "Please provide the number of CreditCard")
-  @Size(max = 100)
-  @CreditCardNumber(message = "Please provide a valid CreditCard")
-  // TODO: add validation to credit card number
+  @CreditCardNumber(message = "Please provide a valid number of CreditCard")
   private String number;
 
   @NotBlank(message = "Please provide the holder name of CreditCard")
@@ -47,5 +48,10 @@ public class CreditCardRequestDto implements Serializable {
   @NotNull(message = "Please provide the year of CreditCard")
   @Min(2019)
   private Integer year;
+  
+  @NotBlank(message = "Please provide the cvv of CreditCard")
+  @Length(min = 3, max = 3)
+  @Pattern(regexp = "^(0|[1-9][0-9]*)$", message = "Please provide a valid cvv of CreditCard")
+  private String cvv;
   
 }

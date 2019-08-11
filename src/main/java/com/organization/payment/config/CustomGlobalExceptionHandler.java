@@ -1,6 +1,5 @@
 package com.organization.payment.config;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -9,13 +8,12 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.ConstraintViolationException;
+import javax.persistence.EntityNotFoundException;
 
-import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,7 +24,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-  // error handle for @Valid
+  //500
   @Override
   protected ResponseEntity<Object> handleMethodArgumentNotValid(
       MethodArgumentNotValidException ex, 
@@ -40,17 +38,18 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 
     // Get all errors
     List<String> errors = ex.getBindingResult()
-        .getFieldErrors()
+        .getAllErrors()
         .stream()
         .map(x -> x.getDefaultMessage())
         .collect(Collectors.toList());
-
+    
     body.put("errors", errors);
 
     return new ResponseEntity<>(body, headers, status);
 
   }
 
+  //400
   @ExceptionHandler(value = { MethodArgumentTypeMismatchException.class })
   public ResponseEntity<Object> handleMethodArgumentTypeMismatch(
       MethodArgumentTypeMismatchException ex, 
@@ -76,6 +75,46 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 
     body.put("errors", errors);
     return new ResponseEntity<>(body, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+  }
+  
+  //400
+  @Override
+  public ResponseEntity<Object> handleHttpMessageNotReadable(
+      HttpMessageNotReadableException ex, 
+      HttpHeaders headers, 
+      HttpStatus status, 
+      WebRequest request) {
+    
+    String error = ex.getMessage();
+ 
+    Map<String, Object> body = new LinkedHashMap<>();
+    body.put("timestamp", new Date());
+    body.put("status", status.value());
+    
+    // Get all errors
+    List<String> errors = new ArrayList<String>();
+    errors.add(error);
+
+    body.put("errors", errors);
+    return new ResponseEntity<>(body, headers, status);
+  }
+  
+  //404
+  @ExceptionHandler(value = { EntityNotFoundException.class })
+  protected ResponseEntity<Object> handleNotFound(final RuntimeException ex, final WebRequest request) {      
+    
+    String error = ex.getMessage() + " not found";
+ 
+    Map<String, Object> body = new LinkedHashMap<>();
+    body.put("timestamp", new Date());
+    body.put("status", HttpStatus.NOT_FOUND.value());
+    
+    // Get all errors
+    List<String> errors = new ArrayList<String>();
+    errors.add(error);
+
+    body.put("errors", errors);
+    return new ResponseEntity<>(body, new HttpHeaders(), HttpStatus.NOT_FOUND);
   }
 
 }

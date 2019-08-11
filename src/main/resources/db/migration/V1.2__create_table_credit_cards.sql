@@ -6,6 +6,7 @@ CREATE TABLE credit_cards (
   year int(4) NOT NULL,
   issuer varchar(100) NOT NULL,
   buyer_id char(36) NOT NULL,
+  cvv varchar(3) NOT NULL,
   PRIMARY KEY (id),
-  KEY FK_CREDIT_CARD_BUYER (buyer_id)
+  FOREIGN KEY (buyer_id) REFERENCES buyers(id)
 )
