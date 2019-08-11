@@ -88,7 +88,7 @@ Check Coverage Page: ``{workdir}/target/site/jacoco/index.html``.
 **Running SonarQube:**
 
 ```sh
-./mvnw sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=f24260866eb7b3ff866c5edb38fb7338eade2eb6 -Dsonar.organization=pedroarapua-github -Dsonar.projectKey=pedroarapua-payment-api -Dsonar.projectName=payment-api -Dsonar.sources=src/main/java -Dsonar.sourceEncoding=UTF-8 -Dsonar.exclusions='target/**,src/main/resources/**,src/main/java/com/organization/payment/v1/dto/**/*,src/main/java/com/organization/payment/enumeration/**/*,src/main/java/com/organization/payment/config/**/*' -Dsonar.java.binaries=target
+./mvnw sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.login={token} -Dsonar.organization=pedroarapua-github -Dsonar.projectKey=pedroarapua-payment-api -Dsonar.projectName=payment-api -Dsonar.sources=src/main/java -Dsonar.sourceEncoding=UTF-8 -Dsonar.exclusions='target/**,src/main/resources/**,src/main/java/com/organization/payment/v1/dto/**/*,src/main/java/com/organization/payment/enumeration/**/*,src/main/java/com/organization/payment/config/**/*' -Dsonar.java.binaries=target
 ```
 
 [SonarQube](https://sonarcloud.io/dashboard?id=pedroarapua-payment-api).
