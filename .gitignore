@@ -29,3 +29,8 @@
 
 ### Other files
 .DS_STORE
+
+.env
+.env-*
+
+.directory
