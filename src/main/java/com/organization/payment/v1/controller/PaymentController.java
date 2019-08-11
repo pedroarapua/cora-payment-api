@@ -103,12 +103,11 @@ public class PaymentController {
   public PaymentResponseDto findById(@PathVariable final UUID id) {
     final Optional<PaymentEntity> opPayment = this.paymentBusiness.findById(id);
 
-    opPayment.orElseThrow(() ->
+    PaymentEntity paymentEntity = opPayment.orElseThrow(() ->
         new EntityNotFoundException("Payment"));
     
     return this.modelMapper.map(
-        opPayment.get(), PaymentResponseDto.class);
+        paymentEntity, PaymentResponseDto.class);
   }
-
 
 }
