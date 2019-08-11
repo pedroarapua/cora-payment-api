@@ -10,15 +10,17 @@ public enum PaymentTypeEnum {
 
   @Getter
   private final String text;
-  
+
   @Override 
-  public String toString() { return text; }
-  
-  public static PaymentTypeEnum fromText(String text){
-    for(PaymentTypeEnum paymentType : PaymentTypeEnum.values()){
-        if(paymentType.getText().equals(text)){
-            return paymentType;
-        }
+  public String toString() { 
+    return text; 
+  }
+
+  public static PaymentTypeEnum fromText(String text) {
+    for (PaymentTypeEnum paymentType : PaymentTypeEnum.values()) {
+      if (paymentType.getText().equals(text)) {
+        return paymentType;
+      }
     }
     throw new IllegalArgumentException();
   }

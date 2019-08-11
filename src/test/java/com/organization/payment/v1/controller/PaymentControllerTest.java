@@ -2,6 +2,7 @@ package com.organization.payment.v1.controller;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -20,17 +21,21 @@ import com.organization.payment.commons.ControllerGenericTest;
 import com.organization.payment.entity.BuyerEntity;
 import com.organization.payment.entity.ClientEntity;
 import com.organization.payment.entity.CreditCardEntity;
+import com.organization.payment.entity.PaymentEntity;
 import com.organization.payment.factory.BuyerEntityFactory;
 import com.organization.payment.factory.ClientEntityFactory;
 import com.organization.payment.factory.CreditCardEntityFactory;
+import com.organization.payment.factory.PaymentEntityFactory;
 import com.organization.payment.factory.PaymentRequestDtoFactory;
 import com.organization.payment.repository.BuyerRepository;
 import com.organization.payment.repository.ClientRepository;
 import com.organization.payment.repository.CreditCardRepository;
+import com.organization.payment.repository.PaymentRepository;
 import com.organization.payment.v1.dto.PaymentBuyerRequestDto;
 import com.organization.payment.v1.dto.PaymentClientRequestDto;
 import com.organization.payment.v1.dto.PaymentCreditCardRequestDto;
 import com.organization.payment.v1.dto.PaymentRequestDto;
+import com.organization.payment.v1.dto.PaymentResponseDto;
 
 import lombok.SneakyThrows;
 
@@ -62,6 +67,9 @@ public class PaymentControllerTest extends ControllerGenericTest<PaymentControll
   private CreditCardEntityFactory creditCardEntityFactory;
   
   @Autowired
+  private PaymentEntityFactory paymentEntityFactory;
+  
+  @Autowired
   private BuyerRepository buyerRepository;
   
   @Autowired
@@ -69,6 +77,9 @@ public class PaymentControllerTest extends ControllerGenericTest<PaymentControll
   
   @Autowired
   private CreditCardRepository creditCardRepository;
+  
+  @Autowired
+  private PaymentRepository paymentRepository;
   
   @Autowired
   private ModelMapper modelMapper;
@@ -513,6 +524,106 @@ public class PaymentControllerTest extends ControllerGenericTest<PaymentControll
         .andReturn()
         .getResponse()
         .getContentAsString();
+  }
+  
+  @Test
+  @Rollback
+  @SneakyThrows
+  public void getPaymentCreditCardByIdSuccess() {
+    BuyerEntity buyerEntity = this.buyerEntityFactory.simple();
+    buyerEntity = this.buyerRepository.save(buyerEntity);
+    
+    ClientEntity clientEntity = this.clientEntityFactory.simple();
+    clientEntity = this.clientRepository.save(clientEntity);
+    
+    CreditCardEntity creditCardEntity = this.creditCardEntityFactory.simple();
+    creditCardEntity.setBuyer(buyerEntity);
+    creditCardEntity = this.creditCardRepository.save(creditCardEntity);
+    
+    PaymentEntity paymentEntity = this.paymentEntityFactory.simple();
+    paymentEntity.setBuyer(buyerEntity);
+    paymentEntity.setClient(clientEntity);
+    paymentEntity.setCreditCard(creditCardEntity);
+    paymentEntity = this.paymentRepository.save(paymentEntity);
+    
+    PaymentResponseDto paymentResponseDto = this.modelMapper.map(
+        paymentEntity, PaymentResponseDto.class);
+
+    final String uri = MessageFormat.format("{0}/{1}", this.uri, paymentEntity.getId());
+    this.mockMvc.perform(
+        get(uri)
+        .contentType(MediaType.APPLICATION_JSON))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id").value(paymentResponseDto.getId().toString()))
+        .andExpect(jsonPath("$.status").value(paymentResponseDto.getStatus().getText()))
+        .andExpect(jsonPath("$.barcodeNumber").doesNotExist())
+        .andExpect(jsonPath("$.amount").value(paymentResponseDto.getAmount()))
+        .andExpect(jsonPath("$.type").value(paymentResponseDto.getType().getText()))
+        .andExpect(jsonPath("$.client.id").value(paymentResponseDto.getClient().getId().toString()))
+        .andExpect(jsonPath("$.buyer.id").value(paymentResponseDto.getBuyer().getId().toString()))
+        .andExpect(jsonPath("$.creditCard.id").value(paymentResponseDto.getCreditCard().getId().toString()))
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+
+  }
+  
+  @Test
+  @Rollback
+  @SneakyThrows
+  public void getPaymentBankSlipByIdSuccess() {
+    BuyerEntity buyerEntity = this.buyerEntityFactory.simple();
+    buyerEntity = this.buyerRepository.save(buyerEntity);
+    
+    ClientEntity clientEntity = this.clientEntityFactory.simple();
+    clientEntity = this.clientRepository.save(clientEntity);
+    
+    PaymentEntity paymentEntity = this.paymentEntityFactory.simpleTypeBankSlip();
+    paymentEntity.setBuyer(buyerEntity);
+    paymentEntity.setClient(clientEntity);
+    
+    paymentEntity = this.paymentRepository.save(paymentEntity);
+    
+    PaymentResponseDto paymentResponseDto = this.modelMapper.map(
+        paymentEntity, PaymentResponseDto.class);
+
+    final String uri = MessageFormat.format("{0}/{1}", this.uri, paymentEntity.getId());
+    this.mockMvc.perform(
+        get(uri)
+        .contentType(MediaType.APPLICATION_JSON))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id").value(paymentResponseDto.getId().toString()))
+        .andExpect(jsonPath("$.status").doesNotExist())
+        .andExpect(jsonPath("$.barcodeNumber").value(paymentResponseDto.getBarcodeNumber()))
+        .andExpect(jsonPath("$.amount").value(paymentResponseDto.getAmount()))
+        .andExpect(jsonPath("$.type").value(paymentResponseDto.getType().getText()))
+        .andExpect(jsonPath("$.client.id").value(paymentResponseDto.getClient().getId().toString()))
+        .andExpect(jsonPath("$.buyer.id").value(paymentResponseDto.getBuyer().getId().toString()))
+        .andExpect(jsonPath("$.creditCard").doesNotExist())
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+
+  }
+  
+  @Test
+  @Rollback
+  @SneakyThrows
+  public void getPaymentByIdPaymentNotFound() {
+    final String uri = MessageFormat.format("{0}/{1}", this.uri, UUID.randomUUID());
+    this.mockMvc.perform(
+        get(uri)
+        .contentType(MediaType.APPLICATION_JSON))
+        .andDo(print())
+        .andExpect(status().is4xxClientError())
+        .andExpect(jsonPath("$.status", equalTo(404)))
+        .andExpect(jsonPath("$.errors[0]", equalTo("Payment not found")))
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+
   }
   
 }

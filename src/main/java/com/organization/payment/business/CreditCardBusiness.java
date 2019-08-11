@@ -1,9 +1,9 @@
 package com.organization.payment.business;
 
+import com.organization.payment.entity.CreditCardEntity;
+
 import java.util.Optional;
 import java.util.UUID;
-
-import com.organization.payment.entity.CreditCardEntity;
 
 public interface CreditCardBusiness {
 

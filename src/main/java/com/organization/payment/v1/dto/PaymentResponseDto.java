@@ -1,11 +1,11 @@
 package com.organization.payment.v1.dto;
 
+import com.organization.payment.enumeration.PaymentCreditCardStatusEnum;
+
 import java.io.Serializable;
 import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
-
-import com.organization.payment.enumeration.PaymentCreditCardStatusEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

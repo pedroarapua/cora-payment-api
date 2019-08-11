@@ -1,10 +1,10 @@
 package com.organization.payment.business.impl;
 
+import br.com.moip.validators.CreditCard;
+
 import com.organization.payment.business.CreditCardBusiness;
 import com.organization.payment.entity.CreditCardEntity;
 import com.organization.payment.repository.CreditCardRepository;
-
-import br.com.moip.validators.CreditCard;
 
 import java.util.Optional;
 import java.util.UUID;
