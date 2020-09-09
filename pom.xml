@@ -38,7 +38,7 @@
         <maven-release-plugin-version>2.5.3</maven-release-plugin-version>
         <java.faker>0.18</java.faker>
         <modelmapper.version>2.3.0</modelmapper.version>
-        <springfox-swagger.version>2.9.2</springfox-swagger.version>
+        <springfox-swagger.version>2.10.0</springfox-swagger.version>
         <sonar.version>3.4.0.905</sonar.version>
         <credit-card-validator.version>0.0.6</credit-card-validator.version>
         <m2e.apt.activation>disabled</m2e.apt.activation>
