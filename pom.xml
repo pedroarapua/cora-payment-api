@@ -31,7 +31,7 @@
         <jacoco-maven-plugin.version>0.8.4</jacoco-maven-plugin.version>
         <openpojo.version>0.8.12</openpojo.version>
         <plpojo.version>0.7.6</plpojo.version>
-        <mysql.version>8.0.12</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
         <jaxb-api-version>2.3.1</jaxb-api-version>
         <jsonschema.version>1.11.1</jsonschema.version>
         <randombeans.version>3.9.0</randombeans.version>
